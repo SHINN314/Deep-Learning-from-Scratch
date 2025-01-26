@@ -45,17 +45,15 @@ def predict(network, x):
 if __name__=="__main__":
   x, t = get_data()
   network = init_network()
-
-  print(x[0])
-
+  
   # batch処理
-  # batch_size = 100
+  batch_size = 100
 
-  # accuracy_cent = 0
-  # for i in range(0, len(x), batch_size):
-  #   x_batch = x[i:i+batch_size]
-  #   y_batch = predict(network, x_batch)
-  #   p = np.argmax(y_batch, axis=1)
-  #   accuracy_cent += np.sum(p == t[i:i+batch_size])
+  accuracy_cent = 0
+  for i in range(0, len(x), batch_size):
+    x_batch = x[i:i+batch_size]
+    y_batch = predict(network, x_batch)
+    p = np.argmax(y_batch, axis=1)
+    accuracy_cent += np.sum(p == t[i:i+batch_size])
 
-  # print("Accuracy:" + str(float(accuracy_cent / len(x))))
+  print("Accuracy:" + str(float(accuracy_cent / len(x))))
