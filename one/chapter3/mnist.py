@@ -11,13 +11,14 @@ def get_data():
   (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
   # flatten
-  for i in range(len(x_train)):
-    x_train[i] = x_train[i].reshape([x.shape[0] * x.shape[1]])
+  flattened_x_test = np.empty(shape=(x_test.shape[0], x_test.shape[1] * x_test.shape[2]))
+  for i in range(len(x_test)):
+    flattened_x_test[i] = x_test[i].reshape([x_test[i].shape[0] * x_test[i].shape[1],])
 
   # normalize
-  
+  flattened_x_test = flattened_x_test / 255.0
 
-  return x_test, y_test
+  return flattened_x_test, y_test
 
 # NNの重みをロードする関数
 def init_network():
@@ -28,9 +29,6 @@ def init_network():
 
 # NNモデルをつかった予測
 def predict(network, x):
-
-  # normalize
-  x = x / 255.0
 
   # calculate network
   W1, W2, W3 = network['W1'], network['W2'], network['W3']
@@ -48,14 +46,16 @@ if __name__=="__main__":
   x, t = get_data()
   network = init_network()
 
+  print(x[0])
+
   # batch処理
-  batch_size = 100
+  # batch_size = 100
 
-  accuracy_cent = 0
-  for i in range(0, len(x), batch_size):
-    x_batch = x[i:i+batch_size]
-    y_batch = predict(network, x_batch)
-    p = np.argmax(y_batch, axis=1)
-    accuracy_cent += np.sum(p == t[i:i+batch_size])
+  # accuracy_cent = 0
+  # for i in range(0, len(x), batch_size):
+  #   x_batch = x[i:i+batch_size]
+  #   y_batch = predict(network, x_batch)
+  #   p = np.argmax(y_batch, axis=1)
+  #   accuracy_cent += np.sum(p == t[i:i+batch_size])
 
-  print("Accuracy:" + str(float(accuracy_cent / len(x))))
+  # print("Accuracy:" + str(float(accuracy_cent / len(x))))
