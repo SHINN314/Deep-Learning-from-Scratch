@@ -4,7 +4,11 @@ import tensorflow as tf
 # データ取得関数
 def get_mnist_data(flatten=True, normalize=True):
   mnist = tf.keras.datasets.mnist
-  (x_train, y_train), (x_test, y_test) = mnist.load_data()
+  (x_train, t_train), (x_test, t_test) = mnist.load_data()
+
+  # one-hot encode
+  t_train = np.identity(len(t_train))[t_train]
+  t_test = np.identity(len(t_test))[t_test]
 
   # normalize
   if(normalize):
@@ -25,6 +29,6 @@ def get_mnist_data(flatten=True, normalize=True):
     for i in range(len(x_test)):
       flattened_x_test[i] = x_test[i].reshape([x_test[i].shape[0] * x_test[i].shape[1],])
 
-    return flattened_x_train, y_train, flattened_x_test, y_test
+    return flattened_x_train, t_train, flattened_x_test, t_test
   else:
-    return x_train, y_train, x_test, y_test
+    return x_train, t_train, x_test, t_test
