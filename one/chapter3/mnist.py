@@ -45,15 +45,15 @@ def predict(network, x):
 if __name__=="__main__":
   x, t = get_data()
   network = init_network()
-  
+
   # batch処理
   batch_size = 100
 
   accuracy_cent = 0
-  for i in range(0, len(x), batch_size):
-    x_batch = x[i:i+batch_size]
-    y_batch = predict(network, x_batch)
-    p = np.argmax(y_batch, axis=1)
-    accuracy_cent += np.sum(p == t[i:i+batch_size])
+  for i in range(0, len(x), batch_size): # 0 to len(x) with batch_size steps
+    x_batch = x[i:i+batch_size] # i番目からi+batch_size-1番目までのデータを取ってくる
+    y_batch = predict(network, x_batch) # 各画像データの予測
+    p = np.argmax(y_batch, axis=1) # 各画像データの予測ラベルの最大値を取得
+    accuracy_cent += np.sum(p == t[i:i+batch_size]) # 予測したラベルの正解数をaccuracy_centに足している
 
   print("Accuracy:" + str(float(accuracy_cent / len(x))))
