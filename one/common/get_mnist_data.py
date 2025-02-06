@@ -2,13 +2,28 @@ import numpy as np
 import tensorflow as tf
 
 # データ取得関数
-def get_mnist_data(flatten=True, normalize=True):
+def get_mnist_data(flatten=True, normalize=True, one_hot=True):
   mnist = tf.keras.datasets.mnist
   (x_train, t_train), (x_test, t_test) = mnist.load_data()
 
-  # one-hot encode
-  t_train = np.identity(len(t_train))[t_train]
-  t_test = np.identity(len(t_test))[t_test]
+  # one-hot encode 
+  if(one_hot):
+    # initialize one-hot array
+    new_t_train = np.empty(shape=(t_train.shape[0], 10))
+    new_t_test = np.empty(shape=(t_test.shape[0], 10))
+
+    # one-hot t_train
+    for i in range(t_train.shape[0]):
+      new_t_train[i] = np.identity(10)[t_train[i]]
+
+    # one-hot t_test
+    for i in range(t_test.shape[0]):
+      new_t_test[i] = np.identity(10)[t_test[i]]
+
+    t_train = new_t_train
+    t_test = new_t_test
+
+
 
   # normalize
   if(normalize):
