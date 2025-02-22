@@ -2,18 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from diff import numerical_diff
 
-def function_2(x):
-  return x[0]**2 + x[1]**2
+def function_2(x, y):
+  return x**2 + y**2
 
 if __name__ == "__main__":
-  x = np.empty([2, np.arange(-3, 3, 0.1).shape[0]])
-  x[0] = np.arange(-3, 3, 0.1)
-  x[1] = np.arange(-3, 3, 0.1)
-  y = function_2(x)
-  y = y.reshape([1, y.shape[0]])
+  # set data
+  x = np.arange(-3, 3, 0.1)
+  y = np.arange(-3, 3, 0.1)
+
+  # 格子点の情報をnumpy arrayに保存
+  X, Y = np.meshgrid(x, y)
+  Z = function_2(X, Y)
 
   fig = plt.figure()
   ax = fig.add_subplot(projection="3d")
-  ax.plot_surface(x[0], x[1], y)
+  ax.plot_surface(X, Y, Z)
+  ax.set_aspect("auto")
   plt.savefig("figure2.png")
  
