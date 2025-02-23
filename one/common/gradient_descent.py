@@ -9,21 +9,21 @@ def gradient_descent(f, init_x, lr=0.1, step_num=100):
   Parameters
   ----------
   f: function
-    Optimizetion function
+    Optimizetion function.
   
   init_x: numpy array
-    Initial values
+    Initial values.
 
   lr: float (default: 0.1)
-    Learning rate
+    Learning rate.
 
   step_num: int (default: 100)
-    Number of times updating minimum values is repeated"
+    Number of times updating minimum values is repeated.
 
   Returns
   ----------
   x: numpy array
-    f's minimum, local minimum value or saddle point
+    f's minimum, local minimum value or saddle point.
   """
   x = init_x
 

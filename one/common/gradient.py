@@ -7,15 +7,15 @@ def numerical_gradient(f, x):
   Parameters
   ----------
   f: function
-    Target of differentiation
+    Target of differentiation.
 
   x: numpy array
-    Point to differentiation
+    Point to differentiation.
 
   Returns
   ----------
   grad: numpy array 
-    Result of differentiation
+    Result of differentiation.
   """
   h = 1e-4
   grad = np.zeros_like(x)
