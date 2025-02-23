@@ -1,0 +1,22 @@
+import numpy as np
+from pertial_diff import numerical_gradient
+from pertial_diff import function_2
+
+"""
+f: 最適化したい関数
+init_x: 初期値
+lr: 学習率
+step_num: 更新回数
+"""
+def gradient_descent(f, init_x, lr=0.1, step_num=100):
+  x = init_x
+
+  for i in range(step_num):
+    grad = numerical_gradient(f, x)
+    x = x - lr * grad
+
+  return x
+
+if __name__=="__main__":
+  init_x = np.array([3.0, -4.0])
+  print(gradient_descent(function_2, init_x=init_x))
