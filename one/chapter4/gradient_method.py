@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from pertial_diff import numerical_gradient
 from pertial_diff import function_2
 
@@ -15,8 +16,18 @@ def gradient_descent(f, init_x, lr=0.1, step_num=100):
     grad = numerical_gradient(f, x)
     x = x - lr * grad
 
+    # グラフにプロット
+    plt.plot(x[0], x[1], marker=".", color="blue")
+    
+  plt.xlim(-4, 4)
+  plt.ylim(-4, 4)
+  plt.title("gradient method steps")
+  plt.xlabel("x")
+  plt.ylabel("y")
+  plt.savefig("figure3.png")
+
   return x
 
 if __name__=="__main__":
-  init_x = np.array([3.0, -4.0])
+  init_x = np.array([-3.0, 4.0])
   print(gradient_descent(function_2, init_x=init_x))
