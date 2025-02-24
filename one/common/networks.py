@@ -21,7 +21,7 @@ class simpleNet:
 
     Parameters
     ----------
-    x: numpy array
+    x: numpy array(2 dimension)
       Input data.
     """
     pred = np.dot(x, self.W)
