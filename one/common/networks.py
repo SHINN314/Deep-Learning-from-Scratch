@@ -1,6 +1,5 @@
 import numpy as np
-from functions import softmax, cross_entropy_error
-from gradient import numerical_gradient
+import common.functions as functions
 
 class simpleNet:
   """
@@ -40,7 +39,12 @@ class simpleNet:
       Teacher data.
     """
     z = self.predict(x)
-    y = softmax(z)
-    loss = cross_entropy_error(y, t)
+    y = functions.softmax(z)
+    loss = functions.cross_entropy_error(y, t)
 
     return loss
+
+if __name__=="__main__":
+  # test code
+  network = simpleNet()
+  print(network.W)
