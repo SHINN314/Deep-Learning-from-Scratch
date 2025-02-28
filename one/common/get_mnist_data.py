@@ -3,6 +3,25 @@ import tensorflow as tf
 
 # データ取得関数
 def get_mnist_data(flatten=True, normalize=True, one_hot=True):
+  """
+  Get mnist data using tensorflow API.
+
+  Parameters
+  ----------
+  flatten: boolean, default True
+    Flatten option. If flatten is True, return 1 * 784 size data.
+
+  normalize: boolean, default True
+    Normalize option. If normalize is True, return data divided by 255.0.
+
+  one_hot: boolean, default True
+    One hot encoding option. If one_hot is True, return encoded taecher data.
+
+  Returns
+  -----------
+  (x_train, t_train, x_test, t_test): tuple
+    Mnist datas.
+  """
   mnist = tf.keras.datasets.mnist
   (x_train, t_train), (x_test, t_test) = mnist.load_data()
 
@@ -44,6 +63,6 @@ def get_mnist_data(flatten=True, normalize=True, one_hot=True):
     for i in range(len(x_test)):
       flattened_x_test[i] = x_test[i].reshape([x_test[i].shape[0] * x_test[i].shape[1],])
 
-    return flattened_x_train, t_train, flattened_x_test, t_test
-  else:
-    return x_train, t_train, x_test, t_test
+    x_train, x_test = flattened_x_train, flattened_x_test
+
+  return x_train, t_train, x_test, t_test
