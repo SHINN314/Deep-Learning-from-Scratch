@@ -1,5 +1,25 @@
 import numpy as np
 
+def sigmoid(x, a=1.0):
+  """
+  Calculate sigmoid function.
+
+  Parameters
+  ----------
+  x: numpy array
+    Array of linear sum values.
+
+  a: float, default 1.0
+    Gain.
+
+  Returns
+  ----------
+  output: float
+    Output of sigmoid function
+  """
+  output = 1 / (1 + np.exp(-a * x))
+  return output
+
 def softmax(x):
   """
   Calculate each element's array.
