@@ -175,8 +175,3 @@ class TwoLayerNet:
     grads["b2"] = gradient.numerical_gradient(loss_W, self.params["b2"])
 
     return grads
-
-if __name__=="__main__":
-  # test code
-  network = simpleNet()
-  print(network.W)
