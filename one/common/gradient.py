@@ -20,7 +20,7 @@ def numerical_gradient(f, x):
   h = 1e-4
   grad = np.zeros_like(x)
 
-  for idx in range(x.size):
+  for idx in range(x.shape[0]):
     # idx成分の微分を計算
     tmp_val = x[idx]
   
