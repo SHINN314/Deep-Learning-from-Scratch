@@ -215,3 +215,67 @@ class Sigmoid:
     dx = dout * self.out * (1 - self.out)
 
     return dx
+  
+class Affine:
+  """
+  Affine layer
+  
+  Atrributes
+  ----------
+  W : numpy.ndarray
+      Weight matrix
+  b : numpy.ndarray
+      Bias vector
+  x : numpy.ndarray
+      Input data
+  dW : numpy.ndarray
+      Gradient of the loss with respect to the weight matrix
+  db : numpy.ndarray
+      Gradient of the loss with respect to the bias vector
+  """
+  def __init__(self, W, b):
+    self.W = W
+    self.b = b
+    self.x = None
+    self.dW = None
+    self.db = None
+
+  def forward(self, x):
+    """
+    Forward pass
+    
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input data
+    
+    Returns
+    -------
+    numpy.ndarray
+        Output data
+    """
+    self.x = x
+    out = np.dot(x, self.W) + self.b
+
+    return out
+  
+  def backward(self, dout):
+    """
+    Backward pass
+    
+    Parameters
+    ----------
+    dout : numpy.ndarray
+      Gradient of the loss with respect to the output
+      
+    Returns
+    -------
+    numpy.ndarray
+      Gradient of the loss with respect to the input
+    """
+    dx = np.dot(dout, self.W.T)
+    self.dW = np.dot(self.x.T, dout)
+    self.db = np.sum(dout, axis=0) # sum over the batch size
+
+    return dx
+    
