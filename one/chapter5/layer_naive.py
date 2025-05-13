@@ -1,3 +1,5 @@
+import numpy as np
+
 class MulLayer:
   """
   Multiplication layer
@@ -65,7 +67,7 @@ class AddLayer:
   y : numpy.ndarray
       Input data
   """
-  
+
   def __init__(self):
     pass # no need to initialize anything
 
@@ -108,3 +110,108 @@ class AddLayer:
     dy = dout
 
     return dx, dy
+  
+class Relu:
+  """
+  ReLU layer
+
+  Attributes
+  ----------
+  mask : numpy.ndarray
+      Mask for the input data.
+      The elements of numpy.darray are True if the corresponding element of the input data is less than or equal to 0, and False otherwise.
+  """
+
+  def __init__(self):
+    self.mask = None
+
+  def forward(self, x):
+    """
+    Forward pass
+    
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input data
+        
+    Returns
+    -------
+    numpy.ndarray
+        Output data
+    """
+    self.mask = (x <= 0)
+    out = x.copy()
+
+    # Set the elements of out to 0 where the corresponding element of the mask is True
+    out[self.mask] = 0
+
+    return out
+  
+  def backward(self, dout):
+    """
+    Backward pass
+    
+    Parameters
+    ----------
+    dout : numpy.ndarray
+      Gradient of the loss with respect to the output
+    
+    Returns
+    -------
+    numpy.ndarray
+      Gradient of the loss with respect to the input
+    """
+    dout[self.mask] = 0
+    dx = dout
+
+    return dx
+  
+class Sigmoid:
+  """
+  Sigmoid Layer
+  
+  Attributes
+  ----------
+  out : numpy.ndarray
+      Output data
+  """
+
+  def __init__(self):
+    self.out = None
+
+  def forward(self, x):
+    """
+    Forward pass
+    
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input data
+        
+    Returns
+    -------
+    numpy.ndarray
+        Output data
+    """
+    out = 1  / (1 + np.exp(-x))
+    self.out = out
+
+    return out
+  
+  def backward(self, dout):
+    """
+    Backward pass
+    
+    Parameters
+    ----------
+    dout : numpy.ndarray
+      Gradient of the loss with respect to the output
+      
+    Returns
+    -------
+    numpy.ndarray
+      Gradient of the loss with respect to the input
+    """
+    dx = dout * self.out * (1 - self.out)
+
+    return dx
