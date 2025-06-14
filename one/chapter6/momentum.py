@@ -1,4 +1,5 @@
-import common.optimizer as opt
+import ..common.optimizer as opt
+import common.gradient as grad
 
 def f(x):
     """
@@ -13,13 +14,21 @@ def f(x):
     return (x[0] ** 2) / 20 + x[1] ** 2
 
 def main():
+    # Initialize parameters and optimizer
     param = {
-        "test": 6.45,
+        "test": [-7.0, 2.0],
+    }
+    grad = {
+        "test": grad.numerical_gradient(f, param["test"]),
     }
     optimizer = opt.Momentum(lr=0.01, momentum=0.9)
-    grad = {
-        "test": 0.01,
-    }
 
     for i in range(100):
         optimizer.update(param, grad)
+
+        # update parameter and gradient
+        param["test"] += optimizer.v["test"]
+        grad["test"] = grad.numerical_gradient(f, param["test"])
+
+
+    print("Final parameters:", param["test"])
