@@ -1,4 +1,5 @@
 import numpy as np
+from one.common.functions import cross_entropy_error, softmax
 
 class MulLayer:
   """
@@ -276,6 +277,65 @@ class Affine:
     dx = np.dot(dout, self.W.T)
     self.dW = np.dot(self.x.T, dout)
     self.db = np.sum(dout, axis=0) # sum over the batch size
+
+    return dx
+  
+class SoftmaxWithLoss:
+  """
+  Softmax with loss layer
+  
+  Attributes
+  ----------
+  loss : float
+      Loss value
+  y : numpy.ndarray
+      Output data
+  t : numpy.ndarray
+      Target data
+  """
+  def __init__(self):
+    self.loss = None
+    self.y = None
+    self.t = None
+
+  def forward(self, x, t):
+    """
+    Forward pass
+    
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input data
+    t : numpy.ndarray
+        Target data
+        
+    Returns
+    -------
+    float
+        Loss value
+    """
+    self.t = t
+    self.y = softmax(x)
+    self.loss = cross_entropy_error(self.y, self.t)
+
+    return self.loss
+  
+  def backward(self, dout=1):
+    """
+    Backward pass
+    
+    Parameters
+    ----------
+    dout : float, default 1
+      Gradient of the loss with respect to the output
+      
+    Returns
+    -------
+    numpy.ndarray
+      Gradient of the loss with respect to the input
+    """
+    batch_size = self.t.shape[0]
+    dx = (self.y - self.t) / batch_size
 
     return dx
     
