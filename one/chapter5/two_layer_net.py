@@ -48,3 +48,29 @@ class TwoLayerNet:
     grads = {}
     grads["W1"] = numerical_gradient(loss_W, self.params["W1"])
     grads["b1"] = numerical_gradient(loss_W, self.params["b1"])
+    grads["W2"] = numerical_gradient(loss_W, self.params["W2"])
+    grads["b2"] = numerical_gradient(loss_W, self.params["b2"])
+
+    return grads
+  
+  def gradient(self, x, t):
+    # forward
+    self.loss(x, t)
+
+    # backword
+    dout = 1
+    dout = self.lastLayer.backword(dout)
+
+    layers = list(self.layers.values())
+    layers.reverse()
+    for layer in layers:
+      dout = layer.backword(dout)
+
+    # config
+    grads = {}
+    grads["W1"] = self.layers["Affine1"].dW
+    grads["b1"] = self.layers["Affine1"].db
+    grads["W2"] = self.layers["Affine2"].dW
+    grads["b2"] = self.layers["Affine2"].db
+
+    return grads
