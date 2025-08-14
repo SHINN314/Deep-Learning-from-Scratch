@@ -1,5 +1,8 @@
 import numpy as np
-from one.common.functions import cross_entropy_error, softmax
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from common.functions import cross_entropy_error, softmax
 
 class MulLayer:
   """
